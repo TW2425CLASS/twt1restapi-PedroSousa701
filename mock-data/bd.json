@@ -1,4 +1,3 @@
-
 {
   "alunos": [
     {
@@ -6,11 +5,26 @@
       "apelido": "Silva",
       "curso": 1,
       "anoCurricular": 2,
-      "idade" : 21
+      "idade": 21,
+      "id": "dd1f"
+    },
+    {
+      "id": "9246",
+      "nome": "Pedro",
+      "apelido": "Sousa",
+      "curso": 1,
+      "anoCurricular": 3,
+      "idade": 22
     }
   ],
   "cursos": [
-    { "id" : 1, "nomeDoCurso": "Engenharia da Computação Gráfica e Multimédia" },
-    { "id" : 2, "nomeDoCurso": "Engenharia de Redes e Sistemas de Computadores" }
+    {
+      "id": "1",
+      "nomeDoCurso": "Engenharia da Computação Gráfica e Multimédia"
+    },
+    {
+      "id": "2",
+      "nomeDoCurso": "Engenharia de Redes e Sistemas de Computadores"
+    }
   ]
 }
