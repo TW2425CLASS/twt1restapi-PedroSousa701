@@ -1,18 +1,19 @@
 {
+  
   "alunos": [
     {
-      "nome": "Joana",
-      "apelido": "Silva",
-      "curso": 1,
-      "anoCurricular": 2,
-      "idade": 21,
-      "id": "dd1f"
-    },
-    {
-      "id": "9246",
-      "nome": "Pedro",
+      "id": "1",
+      "nome": "joao",
       "apelido": "Sousa",
       "curso": 1,
+      "anoCurricular": 2,
+      "idade": 20
+    },
+    {
+      "id": "3",
+      "nome": "rui",
+      "apelido": "nunes",
+      "curso": 2,
       "anoCurricular": 3,
       "idade": 22
     }
