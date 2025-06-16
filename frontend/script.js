@@ -9,7 +9,7 @@ let alunos = [
   { id: 2, nome: 'Pedro', apelido: 'Sousa', cursoId: 103 },
   { id: 5, nome: 'Sonia', apelido: 'Tavares', cursoId: 104 }
 ];
-// qualquer coisa
+// qualquer
 
 let cursos = [
   { id: 101, nome: 'RC' },
