@@ -43,7 +43,7 @@ O projeto simula o ciclo completo de desenvolvimento de uma aplicação web com 
   - Coleção `.json` do Postman em `/tests/`
 
 ---
-
+// pronto
 ### Parte 3: Interface Web (CRUD de Alunos)
 
 - Desenvolver uma página web funcional para gerir alunos:
