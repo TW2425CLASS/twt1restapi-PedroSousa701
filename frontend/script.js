@@ -2,112 +2,149 @@
 const alunosList = document.getElementById('alunos-list');
 const cursosList = document.getElementById('cursos-list');
 
-// Fetch inicial (simulação com dados locais)
-let alunos = [
-  { id: 3, nome: 'André', apelido: 'Neto', cursoId: 101 },
-  { id: 4, nome: 'Tiago', apelido: 'Castro', cursoId: 102 },
-  { id: 2, nome: 'Pedro', apelido: 'Sousa', cursoId: 103 },
-  { id: 5, nome: 'Sonia', apelido: 'Tavares', cursoId: 104 }
-];
-// qualquer
+const API_ALUNOS = 'http://localhost:3000/alunos';
+const API_CURSOS = 'http://localhost:3000/cursos';
 
-let cursos = [
-  { id: 101, nome: 'RC' },
-  { id: 102, nome: 'ECGM' },
-  { id: 103, nome: 'M' },
-  { id: 104, nome: 'SIRC' }
-];
+let isEditingAluno = false;
+let isEditingCurso = false;
 
-function renderAlunos() {
+// ----------- ALUNOS -----------
+function renderAlunos(alunos) {
   alunosList.innerHTML = '';
   alunos.forEach(a => {
     const el = document.createElement('div');
     el.className = 'item';
     el.innerHTML = `
-      ID: ${a.id}, Nome: ${a.nome}, Apelido: ${a.apelido}, CursoID: ${a.cursoId}
+      ID: ${a.id}, Nome: ${a.nome}, Apelido: ${a.apelido}, CursoID: ${a.curso}
       <div>
-        <button onclick="EditarAluno(${a.id})">Editar</button>
-        <button onclick="ApagarAluno(${a.id})">Apagar</button>
+        <button class="edit" onclick="editarAluno('${a.id}')">Edit</button>
+        <button class="delete" onclick="apagarAluno('${a.id}')">Delete</button>
       </div>`;
     alunosList.appendChild(el);
   });
 }
 
-function renderCursos() {
+function carregarAlunos() {
+  fetch(API_ALUNOS)
+    .then(res => res.json())
+    .then(renderAlunos);
+}
+
+window.editarAluno = function(id) {
+  fetch(`${API_ALUNOS}/${id}`)
+    .then(res => res.json())
+    .then(aluno => {
+      document.getElementById('aluno-id').value = aluno.id;
+      document.getElementById('aluno-nome').value = aluno.nome;
+      document.getElementById('aluno-apelido').value = aluno.apelido;
+      document.getElementById('aluno-curso-id').value = aluno.curso;
+      isEditingAluno = true;
+    });
+};
+
+window.apagarAluno = function(id) {
+  fetch(`${API_ALUNOS}/${id}`, { method: 'DELETE' })
+    .then(carregarAlunos);
+};
+
+document.getElementById('aluno-form').onsubmit = e => {
+  e.preventDefault();
+  const id = document.getElementById('aluno-id').value;
+  const nome = document.getElementById('aluno-nome').value;
+  const apelido = document.getElementById('aluno-apelido').value;
+  const curso = Number(document.getElementById('aluno-curso-id').value);
+
+  const aluno = { id, nome, apelido, curso };
+
+  if (isEditingAluno) {
+    fetch(`${API_ALUNOS}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(aluno)
+    }).then(() => {
+      e.target.reset();
+      isEditingAluno = false;
+      carregarAlunos();
+    });
+  } else {
+    fetch(API_ALUNOS, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(aluno)
+    }).then(() => {
+      e.target.reset();
+      carregarAlunos();
+    });
+  }
+};
+
+// ----------- CURSOS -----------
+function renderCursos(cursos) {
   cursosList.innerHTML = '';
   cursos.forEach(c => {
     const el = document.createElement('div');
     el.className = 'item';
     el.innerHTML = `
-      ID: ${c.id}, Nome do Curso: ${c.nome}
+      ID: ${c.id}, Nome do Curso: ${c.nomeDoCurso}
       <div>
-        <button onclick="EditarCurso(${c.id})">Editar</button>
-        <button onclick="ApagarCurso(${c.id})">Apagar</button>
-      </div>`;
+        <button class="edit" onclick="editarCurso('${c.id}')">Edit</button>
+        <button class="delete" onclick="apagarCurso('${c.id}')">Delete</button>
+      </div>
+    `;
     cursosList.appendChild(el);
   });
 }
 
-document.getElementById('aluno-form').onsubmit = e => {
-  e.preventDefault();
-  const id = parseInt(document.getElementById('aluno-id').value);
-  const nome = document.getElementById('aluno-nome').value;
-  const apelido = document.getElementById('aluno-apelido').value;
-  const cursoId = parseInt(document.getElementById('aluno-curso-id').value);
+function carregarCursos() {
+  fetch(API_CURSOS)
+    .then(res => res.json())
+    .then(renderCursos);
+}
 
-  if (id) {
-    const aluno = alunos.find(a => a.id === id);
-    aluno.nome = nome;
-    aluno.apelido = apelido;
-    aluno.cursoId = cursoId;
-  } else {
-    const novoId = Math.max(...alunos.map(a => a.id), 0) + 1;
-    alunos.push({ id: novoId, nome, apelido, cursoId });
-  }
+window.editarCurso = function(id) {
+  fetch(`${API_CURSOS}/${id}`)
+    .then(res => res.json())
+    .then(curso => {
+      document.getElementById('curso-id').value = curso.id;
+      document.getElementById('curso-nome').value = curso.nomeDoCurso;
+      isEditingCurso = true;
+    });
+};
 
-  e.target.reset();
-  renderAlunos();
+window.apagarCurso = function(id) {
+  fetch(`${API_CURSOS}/${id}`, { method: 'DELETE' })
+    .then(carregarCursos);
 };
 
 document.getElementById('curso-form').onsubmit = e => {
   e.preventDefault();
-  const id = parseInt(document.getElementById('curso-id').value);
-  const nome = document.getElementById('curso-nome').value;
+  const id = document.getElementById('curso-id').value;
+  const nomeDoCurso = document.getElementById('curso-nome').value;
 
-  const cursoExistente = cursos.find(c => c.id === id);
-  if (cursoExistente) {
-    cursoExistente.nome = nome;
+  const curso = { id, nomeDoCurso };
+
+  if (isEditingCurso) {
+    fetch(`${API_CURSOS}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(curso)
+    }).then(() => {
+      e.target.reset();
+      isEditingCurso = false;
+      carregarCursos();
+    });
   } else {
-    cursos.push({ id, nome });
+    fetch(API_CURSOS, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(curso)
+    }).then(() => {
+      e.target.reset();
+      carregarCursos();
+    });
   }
-
-  e.target.reset();
-  renderCursos();
 };
 
-function EditarAluno(id) {
-  const aluno = alunos.find(a => a.id === id);
-  document.getElementById('aluno-id').value = aluno.id;
-  document.getElementById('aluno-nome').value = aluno.nome;
-  document.getElementById('aluno-apelido').value = aluno.apelido;
-  document.getElementById('aluno-curso-id').value = aluno.cursoId;
-}
-
-function ApagarAluno(id) {
-  alunos = alunos.filter(a => a.id !== id);
-  renderAlunos();
-}
-
-function EditarCurso(id) {
-  const curso = cursos.find(c => c.id === id);
-  document.getElementById('curso-id').value = curso.id;
-  document.getElementById('curso-nome').value = curso.nome;
-}
-
-function ApagarCurso(id) {
-  cursos = cursos.filter(c => c.id !== id);
-  renderCursos();
-}
-
-renderAlunos();
-renderCursos();
+// Inicialização
+carregarAlunos();
+carregarCursos();

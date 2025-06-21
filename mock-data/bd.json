@@ -1,5 +1,4 @@
 {
-  
   "alunos": [
     {
       "id": "1",
@@ -16,6 +15,12 @@
       "curso": 2,
       "anoCurricular": 3,
       "idade": 22
+    },
+    {
+      "id": "1",
+      "nome": "Sonia",
+      "apelido": "Tavares",
+      "curso": 2
     }
   ],
   "cursos": [
@@ -24,8 +29,8 @@
       "nomeDoCurso": "Engenharia da Computação Gráfica e Multimédia"
     },
     {
-      "id": "2",
-      "nomeDoCurso": "Engenharia de Redes e Sistemas de Computadores"
+      "id": "3",
+      "nomeDoCurso": "sss"
     }
   ]
 }
