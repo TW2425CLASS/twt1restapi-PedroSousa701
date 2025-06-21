@@ -1,5 +1,6 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/VezZDIH2)
 # Trabalho Prático #1
-
+Pedro Sousa
 ## Consumo e Implementação de APIs RESTful
 
 ### Objetivo Geral
@@ -42,7 +43,7 @@ O projeto simula o ciclo completo de desenvolvimento de uma aplicação web com 
   - Coleção `.json` do Postman em `/tests/`
 
 ---
-
+// pronto
 ### Parte 3: Interface Web (CRUD de Alunos)
 
 - Desenvolver uma página web funcional para gerir alunos:
