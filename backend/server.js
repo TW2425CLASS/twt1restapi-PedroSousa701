@@ -136,5 +136,10 @@ app.delete('/cursos/:id', async (req, res) => {
   res.status(204).end();
 });
 
+// Endpoint raiz para mostrar mensagem personalizada
+app.get('/', (req, res) => {
+  res.send('API TWT1 REST API ativa!');
+});
+
 // Arranca o servidor
 app.listen(3000, () => console.log('API real a correr na porta 3000'));
