@@ -1,26 +1,25 @@
 // JS para operações CRUD com Fetch API
-const alunosList = document.getElementById('alunos-list');
-const cursosList = document.getElementById('cursos-list');
-
 const API_ALUNOS = 'http://localhost:3000/alunos';
 const API_CURSOS = 'http://localhost:3000/cursos';
 
-let isEditingAluno = false;
-let isEditingCurso = false;
-
 // ----------- ALUNOS -----------
+
+let cursosCache = [];
+
 function renderAlunos(alunos) {
+  const alunosList = document.getElementById('alunos-list');
   alunosList.innerHTML = '';
-  alunos.forEach(a => {
-    const el = document.createElement('div');
-    el.className = 'item';
-    el.innerHTML = `
-      ID: ${a.id}, Nome: ${a.nome}, Apelido: ${a.apelido}, CursoID: ${a.curso}
+  alunos.forEach(aluno => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+      <span>${aluno._id} - ${aluno.nome} ${aluno.apelido} (Curso: ${aluno.id_curso}, Ano ${aluno.anoCurricular})</span>
       <div>
-        <button class="edit" onclick="editarAluno('${a.id}')">Edit</button>
-        <button class="delete" onclick="apagarAluno('${a.id}')">Delete</button>
-      </div>`;
-    alunosList.appendChild(el);
+        <button class="edit" onclick="editarAluno('${aluno._id}')">Editar</button>
+        <button class="delete" onclick="apagarAluno('${aluno._id}')">Apagar</button>
+      </div>
+    `;
+    alunosList.appendChild(div);
   });
 }
 
@@ -34,11 +33,12 @@ window.editarAluno = function(id) {
   fetch(`${API_ALUNOS}/${id}`)
     .then(res => res.json())
     .then(aluno => {
-      document.getElementById('aluno-id').value = aluno.id;
+      document.getElementById('aluno-id').value = aluno._id;
+      document.getElementById('aluno-id').readOnly = true; // <-- impede alterar o ID ao editar
       document.getElementById('aluno-nome').value = aluno.nome;
       document.getElementById('aluno-apelido').value = aluno.apelido;
-      document.getElementById('aluno-curso-id').value = aluno.curso;
-      isEditingAluno = true;
+      document.getElementById('aluno-curso').value = aluno.id_curso || '';
+      document.getElementById('aluno-ano').value = aluno.anoCurricular;
     });
 };
 
@@ -47,102 +47,117 @@ window.apagarAluno = function(id) {
     .then(carregarAlunos);
 };
 
-document.getElementById('aluno-form').onsubmit = e => {
+document.getElementById('aluno-form').onsubmit = async function(e) {
   e.preventDefault();
   const id = document.getElementById('aluno-id').value;
   const nome = document.getElementById('aluno-nome').value;
   const apelido = document.getElementById('aluno-apelido').value;
-  const curso = Number(document.getElementById('aluno-curso-id').value);
+  const id_curso = document.getElementById('aluno-curso').value;
+  const anoCurricular = document.getElementById('aluno-ano').value;
 
-  const aluno = { id, nome, apelido, curso };
+  if (!id || !nome || !apelido || !id_curso || isNaN(anoCurricular)) {
+    alert('Preencha todos os campos!');
+    return;
+  }
 
-  if (isEditingAluno) {
-    fetch(`${API_ALUNOS}/${id}`, {
+  const aluno = { nome, apelido, id_curso, anoCurricular };
+
+  // Verifica se o aluno já existe
+  const res = await fetch(`${API_ALUNOS}/${id}`);
+  if (res.ok) {
+    // Atualizar (PUT)
+    await fetch(`${API_ALUNOS}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(aluno)
-    }).then(() => {
-      e.target.reset();
-      isEditingAluno = false;
-      carregarAlunos();
     });
   } else {
-    fetch(API_ALUNOS, {
+    // Criar novo (POST)
+    await fetch(API_ALUNOS, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(aluno)
-    }).then(() => {
-      e.target.reset();
-      carregarAlunos();
+      body: JSON.stringify({ id, ...aluno })
     });
   }
+
+    carregarAlunos();
+  e.target.reset();
+  document.getElementById('aluno-id').value = '';
+  document.getElementById('aluno-id').readOnly = false;
 };
 
 // ----------- CURSOS -----------
+
 function renderCursos(cursos) {
+  const cursosList = document.getElementById('cursos-list');
   cursosList.innerHTML = '';
-  cursos.forEach(c => {
-    const el = document.createElement('div');
-    el.className = 'item';
-    el.innerHTML = `
-      ID: ${c.id}, Nome do Curso: ${c.nomeDoCurso}
+  cursos.forEach(curso => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+      <span>${curso._id} - ${curso.nomeDoCurso}</span>
       <div>
-        <button class="edit" onclick="editarCurso('${c.id}')">Edit</button>
-        <button class="delete" onclick="apagarCurso('${c.id}')">Delete</button>
+        <button class="edit" onclick="editarCurso('${curso._id}')">Editar</button>
+        <button class="delete" onclick="apagarCurso('${curso._id}')">Apagar</button>
       </div>
     `;
-    cursosList.appendChild(el);
+    cursosList.appendChild(div);
   });
 }
 
 function carregarCursos() {
   fetch(API_CURSOS)
     .then(res => res.json())
-    .then(renderCursos);
-}
-
-window.editarCurso = function(id) {
-  fetch(`${API_CURSOS}/${id}`)
-    .then(res => res.json())
-    .then(curso => {
-      document.getElementById('curso-id').value = curso.id;
-      document.getElementById('curso-nome').value = curso.nomeDoCurso;
-      isEditingCurso = true;
+    .then(cursos => {
+      renderCursos(cursos);
     });
-};
+}
 
 window.apagarCurso = function(id) {
   fetch(`${API_CURSOS}/${id}`, { method: 'DELETE' })
     .then(carregarCursos);
 };
 
-document.getElementById('curso-form').onsubmit = e => {
+window.editarCurso = function(id) {
+  fetch(`${API_CURSOS}/${id}`)
+    .then(res => res.json())
+    .then(curso => {
+      document.getElementById('curso-idCurso').value = curso._id;
+      document.getElementById('curso-idCurso').readOnly = true; // impede alterar o ID ao editar
+      document.getElementById('curso-nome').value = curso.nomeDoCurso;
+    });
+};
+
+document.getElementById('curso-form').onsubmit = async function(e) {
   e.preventDefault();
-  const id = document.getElementById('curso-id').value;
-  const nomeDoCurso = document.getElementById('curso-nome').value;
+  const idCurso = document.getElementById('curso-idCurso').value.trim();
+  const nomeDoCurso = document.getElementById('curso-nome').value.trim();
+  if (!idCurso || !nomeDoCurso) {
+    alert('Preencha todos os campos do curso!');
+    return;
+  }
 
-  const curso = { id, nomeDoCurso };
-
-  if (isEditingCurso) {
-    fetch(`${API_CURSOS}/${id}`, {
+  // Verifica se o curso já existe
+  const res = await fetch(`${API_CURSOS}/${idCurso}`);
+  if (res.ok) {
+    // Atualizar (PUT)
+    await fetch(`${API_CURSOS}/${idCurso}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(curso)
-    }).then(() => {
-      e.target.reset();
-      isEditingCurso = false;
-      carregarCursos();
+      body: JSON.stringify({ nomeDoCurso })
     });
   } else {
-    fetch(API_CURSOS, {
+    // Criar novo (POST)
+    await fetch(API_CURSOS, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(curso)
-    }).then(() => {
-      e.target.reset();
-      carregarCursos();
+      body: JSON.stringify({ idCurso, nomeDoCurso })
     });
   }
+
+  carregarCursos();
+  e.target.reset();
+  document.getElementById('curso-idCurso').readOnly = false;
 };
 
 // Inicialização

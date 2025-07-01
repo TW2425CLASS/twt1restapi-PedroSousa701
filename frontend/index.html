@@ -12,10 +12,11 @@
       <h2>Alunos</h2>
       <div id="alunos-list"></div>
       <form id="aluno-form">
-        <input type="text" id="aluno-id" placeholder="Aluno ID" hidden>
+        <input type="text" id="aluno-id" placeholder="Aluno ID" required>
         <input type="text" id="aluno-nome" placeholder="Nome" required>
         <input type="text" id="aluno-apelido" placeholder="Apelido" required>
-        <input type="number" id="aluno-curso-id" placeholder="Curso ID" required>
+        <input type="text" id="aluno-curso" placeholder="Curso" required>
+        <input type="text" id="aluno-ano" placeholder="Ano Curricular" required>
         <button type="submit" class="edit">Adicionar Aluno</button>
       </form>
     </section>
@@ -23,7 +24,7 @@
       <h2>Cursos</h2>
       <div id="cursos-list"></div>
       <form id="curso-form">
-        <input type="number" id="curso-id" placeholder="Curso ID" required>
+        <input type="text" id="curso-idCurso" placeholder="ID do Curso" required>
         <input type="text" id="curso-nome" placeholder="Nome do Curso" required>
         <button type="submit" class="edit">Adicionar Curso</button>
       </form>
