@@ -1,6 +1,6 @@
 // JS para operações CRUD com Fetch API
-const API_ALUNOS = 'http://localhost:3000/alunos';
-const API_CURSOS = 'http://localhost:3000/cursos';
+const API_ALUNOS = 'https://twt1restapi-pedrosousa701-1.onrender.com/alunos';
+const API_CURSOS = 'https://twt1restapi-pedrosousa701-1.onrender.com/cursos';
 
 // ----------- ALUNOS -----------
 
