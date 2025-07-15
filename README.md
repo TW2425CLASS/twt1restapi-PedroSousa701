@@ -1,152 +1,102 @@
 # Trabalho Prático #1
 
-## Consumo e Implementação de APIs RESTful
+**Autor:** Pedro Sousa
+**Número:** 31366
 
-### Objetivo Geral
+## Publicação
 
-Consolidar os conhecimentos em desenvolvimento web com foco na criação, consumo e implementação de APIs RESTful utilizando tecnologias do ecossistema JavaScript:
+- **Frontend:** [https://pedrosousa701-qigo.vercel.app/]
+- **Backend:** [https://twt1restapi-pedrosousa701-3.onrender.com]
 
-- Node.js + Express
-- MongoDB / MongoDB Atlas
-- JSON-Server
-- Fetch API
-- Swagger (opcional)
 
-O projeto simula o ciclo completo de desenvolvimento de uma aplicação web com front-end e back-end separados, incluindo testes e deploy.
+## Como instalar
 
----
+### Pré-requisitos
+- Node.js
+- npm
+- Conta MongoDB Atlas (para o backend real)
 
-## Partes do Trabalho
+### Backend
 
-### Parte 1: Estruturação da Base de Dados (JSON)
+- Entrar na pasta do backend 
 
-- Criar um ficheiro `bd.json` com:
-
-  - Lista de alunos: `nome`, `apelido`, `curso`, `anoCurricular`
-  - Lista de cursos: `nomeDoCurso`
-
-- 📁 Diretório sugerido: `/mock-data/`
-- 📄 Entregável: `bd.json`
-
----
-
-### Parte 2: API Simulada com JSON-Server + Testes
-
-- Configurar e iniciar `json-server` com `bd.json`
-- Testar os endpoints com Postman (CRUD de alunos, leitura de cursos)
-- Exportar a coleção de testes
-
-- 📁 Diretório sugerido: `/mock-server/`
-- 📄 Entregáveis:
-  - Código de configuração (`package.json`, script json-server)
-  - Coleção `.json` do Postman em `/tests/`
-
----
-
-### Parte 3: Interface Web (CRUD de Alunos)
-
-- Desenvolver uma página web funcional para gerir alunos:
-  - Ver alunos
-  - Adicionar aluno
-  - Editar aluno
-  - Apagar aluno
-- Utilizar `Fetch API` e programação assíncrona
-
-- 📁 Diretório sugerido: `/frontend/`
-- 📄 Entregável: Página funcional conectada à API simulada
-
----
-
-### Parte 4: API RESTful real (Node.js + Express + MongoDB Atlas)
-
-- Migrar os dados para o MongoDB Atlas
-- Implementar a API Express com endpoints equivalentes ao JSON-server
-- Manter a estrutura RESTful
-- Sugestão : usar mongoose a abordagem MVC (bónus 5%)
-
-- 📁 Diretório sugerido: `/backend/`
-- 📄 Entregável: Código funcional da API com instruções
-
----
-
-### Parte 5: Deploy da Aplicação
-
-- Fazer deploy do front-end no [Vercel](https://vercel.com)
-- (Opcional) Fazer deploy da API no [Render](https://render.com)
-- Adaptar o front-end para consumir a nova API
-
-📄 Incluir no `README.md`:
-
-- URL pública do front-end
-- URL da API real
-- 📄 Entregável: Links funcionais no repositório
-
----
-
-### Parte 6 (Bonificação): Documentação da API
-
-- Utilizar Swagger para documentar os endpoints da API
-- Incluir rota `/api-docs` na aplicação
-
-- 📁 Diretório sugerido: `/backend/docs/`
-- 📄 Entregável: Swagger funcional e acessível
-
----
-
-## Organização do Projeto
-
-```text
-projeto-raiz/
-│
-├── /frontend/ ← Interface web (HTML/CSS/JS)
-├── /backend/ ← API RESTful com Node.js + MongoDB
-├── /mock-server/ ← JSON-server configurado
-├── /mock-data/ ← Base de dados JSON original
-├── /tests/ ← Coleção de testes Postman
-├── README.md ← Instruções, links e notas
-└── .gitignore, etc.
+```sh
+cd backend 
 ```
+- Instalar dependências:
+```sh
+npm install
+```
+- Configure a string de conexão do MongoDB Atlas em `server.js`
 
----
+- Iniciar o servidor:
+```sh
+node server.js
+```
+- O backend ficará disponível em `http://localhost:3000`
 
-## Sugestão de Branches
+### Frontend
 
-| Branch     | Descrição                        |
-| ---------- | -------------------------------- |
-| `main`     | Versão estável e final           |
-| `dev`      | Desenvolvimento geral            |
-| `frontend` | Interface e interação do usuário |
-| `api`      | API real (Node + MongoDB)        |
-| `deploy`   | Adaptações para Vercel/Render    |
+- Abrir o ficheiro `frontend/index.html` no browser.
 
----
+## Descrição da Base de Dados
 
-## Critérios de Avaliação
+- **Coleção Alunos:**
+  - `_id` (string, obrigatório)
+  - `nome` (string)
+  - `apelido` (string)
+  - `id_curso` (string, id do curso)
+  - `anoCurricular` (number)
 
-| Critério                         | Peso |
-| -------------------------------- | ---- |
-| Base de dados JSON correta       | 10%  |
-| API simulada e testada (Postman) | 10%  |
-| Funcionalidade do front-end      | 30%  |
-| Qualidade da API real (Node.js)  | 30%  |
-| Integração front-end/backend     | 10%  |
-| Deploy funcional                 | 10%  |
-| Bonificação (MVC)                | +5%  |
-| Bonificação (Swagger)            | +5%  |
+- **Coleção Cursos:**
+  - `_id` (string, obrigatório)
+  - `nomeDoCurso` (string)
 
----
+  ## Descrição da API (Rotas)
 
-## Entrega
+- **Alunos**
+  - `GET /alunos` — Lista todos os alunos
+  - `GET /alunos/:id` — Devolve um aluno pelo ID
+  - `POST /alunos` — Adiciona um novo aluno  
+    Exemplo:
+    ```json
+    {
+      "id": "1",
+      "nome": "Pedro",
+      "apelido": "Sousa",
+      "id_curso": "9",
+      "anoCurricular": 2
+    }
+    ```
+  - `PUT /alunos/:id` — Edita um aluno existente
+  - `DELETE /alunos/:id` — Remove um aluno
 
-- Entrega via **GitHub Classroom**.
-- O repositório deve conter:
-  - Código funcional
-  - README.md com instruções claras
-  - Links de deploy (front e opcionalmente back)
+- **Cursos**
+  - `GET /cursos` — Lista todos os cursos
+  - `GET /cursos/:id` — Devolve um curso pelo ID
+  - `POST /cursos` — Adiciona um novo curso  
+    Exemplo:
+    ```json
+    {
+      "idCurso": "9",
+      "nomeDoCurso": "Engenharia Informática"
+    }
+    ```
+  - `PUT /cursos/:id` — Edita um curso existente
+  - `DELETE /cursos/:id` — Remove um curso
 
----
+## Descrição do Frontend
 
-### Repositório Base
+- Interface web simples para gestão de alunos e cursos.
+- Permite:
+  - Listar, adicionar, editar e apagar alunos.
+  - Listar, adicionar, editar e apagar cursos.
+- Comunicação com a API via Fetch API.
+- Totalmente funcional com a API real (MongoDB Atlas + Express).
 
-Usa o repositório template inicial fornecido no GitHub Classroom.
-# TWT1RESTAPI
+## Outros conteúdos relevantes
+
+- **Tecnologias usadas:** Node.js, Express, MongoDB Atlas, Mongoose, HTML, CSS, JavaScript (Fetch API)
+- **Deploy:**  
+  - Backend: Render  
+  - Frontend: Vercel

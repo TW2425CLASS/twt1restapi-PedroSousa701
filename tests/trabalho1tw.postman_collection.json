@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "3779aeaa-6812-4556-9bba-3ecd2d046279",
+		"name": "trabalho1tw",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45658899",
+		"_collection_link": "https://pedro-4941734.postman.co/workspace/pedro's-Workspace~5e2a5f23-232f-45a4-8279-07ec48753575/collection/45658899-3779aeaa-6812-4556-9bba-3ecd2d046279?action=share&source=collection_link&creator=45658899"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/alunos",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/alunos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"alunos"
+					]
+				},
+				"description": "obter todos os alunos"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/alunos",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"nome\": \"Pedro\",\r\n      \"apelido\": \"Sousa\",\r\n      \"curso\": 1,\r\n      \"anoCurricular\": 3,\r\n      \"idade\" : 22\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/alunos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"alunos"
+					]
+				},
+				"description": "criar novo aluno"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/alunos/2",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nome\": \"rui\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/alunos/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"alunos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/alunos/2 Copy",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nome\": \"joao\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/alunos/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"alunos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/alunos/2 Copy 2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nome\": \"joao\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/alunos/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"alunos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
