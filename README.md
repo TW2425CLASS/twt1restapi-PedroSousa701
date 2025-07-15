@@ -22,17 +22,17 @@
 ```sh
 cd backend 
 ```
-   - Instalar dependências:
-     ```sh
-     npm install
-     ```
-  - Configure a string de conexão do MongoDB Atlas em `server.js`
+- Instalar dependências:
+```sh
+npm install
+```
+- Configure a string de conexão do MongoDB Atlas em `server.js`
 
-   - Iniciar o servidor:
-     ```sh
-    node server.js
-     ```
-   - O backend ficará disponível em `http://localhost:3000`
+- Iniciar o servidor:
+```sh
+node server.js
+```
+- O backend ficará disponível em `http://localhost:3000`
 
 ### Frontend
 
