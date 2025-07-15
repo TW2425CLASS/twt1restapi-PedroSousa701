@@ -58,7 +58,7 @@ node server.js
   - `GET /alunos` — Lista todos os alunos
   - `GET /alunos/:id` — Devolve um aluno pelo ID
   - `POST /alunos` — Adiciona um novo aluno  
-    Exemplo body:
+    Exemplo:
     ```json
     {
       "id": "1",
@@ -75,7 +75,7 @@ node server.js
   - `GET /cursos` — Lista todos os cursos
   - `GET /cursos/:id` — Devolve um curso pelo ID
   - `POST /cursos` — Adiciona um novo curso  
-    Exemplo body:
+    Exemplo:
     ```json
     {
       "idCurso": "9",
