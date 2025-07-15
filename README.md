@@ -78,8 +78,8 @@ O projeto simula o ciclo completo de desenvolvimento de uma aplicação web com 
 
 📄 Incluir no `README.md`:
 
-- URL pública do front-end
-- URL da API real
+- URL pública do front-end - https://pedrosousa701-qigo.vercel.app/
+- URL da API real - https://twt1restapi-pedrosousa701-2.onrender.com/
 - 📄 Entregável: Links funcionais no repositório
 
 ---
